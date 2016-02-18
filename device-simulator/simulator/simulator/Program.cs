@@ -19,15 +19,16 @@ namespace simulator
         static int maxTemperature = 0;
         static int minTemperature = 1;
         static string deviceKey = null;
-        static Random random = new Random();
         static DeviceClient deviceClient = null;
+        static Random random = new Random();
+        
         /// <summary>
         /// Simulator a device
         /// </summary>
         /// <param name="args">Usage: sumulator {deviceid} {min} {max}</param>
         static void Main(string[] args)
         {
-            if(args.Length < 3)
+            if (args.Length < 3)
             {
                 Error("Usage: sumulator {deviceid} {min} {max}");
                 Wait();
@@ -48,7 +49,7 @@ namespace simulator
             //deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey),
             //                    Microsoft.Azure.Devices.Client.TransportType.Http1);
 
-            SendDeviceToCloudMessagesAsync(msg);
+            SendDeviceToCloudMessagesAsync();
 
             Wait("Press [ENTER] to exit...");
 
@@ -72,7 +73,8 @@ namespace simulator
             var temp = random.Next(minTemperature, maxTemperature).ToString();
             sb.Append("{");
             sb.Append($"\"deviceId\":\"{deviceId}\",");
-            sb.Append($"\"temperature\":\"{temp}\",");
+            sb.Append($"\"temperature\":{temp},");
+            sb.Append($"\"eventId\":\"{Guid.NewGuid().ToString()}\",");
             sb.Append($"\"status\":\"\"");
             sb.Append("}");
 
@@ -115,16 +117,16 @@ namespace simulator
             Log($"device id {deviceId} : {deviceKey}");
         }
 
-        private static async void SendDeviceToCloudMessagesAsync(string telemetry)
+        private static async void SendDeviceToCloudMessagesAsync()
         {
-            Random rand = new Random();
-
             while (true)
             {
+                string telemetry = GenerateMessage();
+
                 await deviceClient.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(Encoding.UTF8.GetBytes(telemetry)));
                 Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, telemetry);
 
-                Thread.Sleep(1000);
+                Thread.Sleep(3000);
             }
         }
     }

@@ -75,6 +75,7 @@ namespace simulator
             sb.Append($"\"deviceId\":\"{deviceId}\",");
             sb.Append($"\"temperature\":{temp},");
             sb.Append($"\"eventId\":\"{Guid.NewGuid().ToString()}\",");
+            sb.Append($"\"time\":\"{DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")}\",");
             sb.Append($"\"status\":\"\"");
             sb.Append("}");
 

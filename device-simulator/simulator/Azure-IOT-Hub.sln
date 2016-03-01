@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sks-webjob", "sks-webjob\sk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sks-webjob-sdk-version", "sks-webjob-sdk-version\sks-webjob-sdk-version.csproj", "{7610A26C-5ADD-43D8-90DC-7053E1F84A37}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StreamAnalytics", "StreamAnalytics", "{FAB1D8E9-7189-4538-A2E8-76DA06F00B25}"
+	ProjectSection(SolutionItems) = preProject
+		query.txt = query.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

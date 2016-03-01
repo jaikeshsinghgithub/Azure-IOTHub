@@ -7,14 +7,15 @@ using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Common.Exceptions;
 using Microsoft.Azure.Devices.Client;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace simulator
 {
     class Program
     {
         static RegistryManager registryManager;
-        static string connectionString = "HostName=michi-iothub-01.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=evJgIxV2Mwqs9UH1R2dNIwjzM6FxiqOKOFpAjFOL1CI=";
-        static string iotHubUri = "michi-iothub-01.azure-devices.net";
+        static string connectionString = "HostName=michi-iotsuite-cloud.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=uQ9bNaYgw+LWcKpH78NIPcqLTHsWVoLF7OrJ0DIYFVE=";
+        static string iotHubUri = "michi-iotsuite-cloud.azure-devices.net";
         static string deviceId = null;
         static int maxTemperature = 0;
         static int minTemperature = 1;
@@ -28,6 +29,7 @@ namespace simulator
         /// <param name="args">Usage: sumulator {deviceid} {min} {max}</param>
         static void Main(string[] args)
         {
+            #region added
             if (args.Length < 3)
             {
                 Error("Usage: sumulator {deviceid} {min} {max}");
@@ -39,18 +41,20 @@ namespace simulator
             maxTemperature = int.Parse(args[2]);
 
             registryManager = RegistryManager.CreateFromConnectionString(connectionString);
+            #endregion
             AddDeviceAsync().Wait();
             //deviceKey = "OTUJwGXWV6mweq/CUSlqaEnackTI6SYXBYM3U75HbKg=";
 
-            var msg = GenerateMessage();
+#if false
             //AMQP (default)
             deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey));
+#else
             //HTTPS
-            //deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey),
-            //                    Microsoft.Azure.Devices.Client.TransportType.Http1);
-
+            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey),
+                                                Microsoft.Azure.Devices.Client.TransportType.Http1);
+#endif
             SendDeviceToCloudMessagesAsync();
-
+            ReceiveCommandAsync();
             Wait("Press [ENTER] to exit...");
 
             RemoveDeviceAsync().Wait();
@@ -67,19 +71,10 @@ namespace simulator
             }
             Console.ReadLine();
         }
-        static string GenerateMessage()
+        static string GenerateMessage(int seq, string message)
         {
-            var sb = new StringBuilder();
-            var temp = random.Next(minTemperature, maxTemperature).ToString();
-            sb.Append("{");
-            sb.Append($"\"deviceId\":\"{deviceId}\",");
-            sb.Append($"\"temperature\":{temp},");
-            sb.Append($"\"eventId\":\"{Guid.NewGuid().ToString()}\",");
-            sb.Append($"\"time\":\"{DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")}\",");
-            sb.Append($"\"status\":\"\"");
-            sb.Append("}");
-
-            return sb.ToString();
+            var msg = TelemetryData.Random(string.Format("{0}{1}",DateTime.UtcNow.ToString("yyyymmdd"),seq.ToString("0000000")),message);
+            return JsonConvert.SerializeObject(msg);
         }
         static void Error(string msg)
         {
@@ -120,14 +115,30 @@ namespace simulator
 
         private static async void SendDeviceToCloudMessagesAsync()
         {
+            int i = 0;
             while (true)
             {
-                string telemetry = GenerateMessage();
+                i++;
+                string telemetry = GenerateMessage(i, $"message:{i}");
 
                 await deviceClient.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(Encoding.UTF8.GetBytes(telemetry)));
                 Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, telemetry);
 
                 Thread.Sleep(3000);
+            }
+        }
+
+        private async static void ReceiveCommandAsync()
+        {
+            while (true)
+            {
+                var cmd = await deviceClient.ReceiveAsync();
+                if (cmd != null)
+                {
+                    Success(Encoding.UTF8.GetString(cmd.GetBytes()));
+                }
+
+                Thread.Sleep(1000);
             }
         }
     }

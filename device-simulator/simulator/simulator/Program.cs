@@ -14,8 +14,8 @@ namespace simulator
     class Program
     {
         static RegistryManager registryManager;
-        static string connectionString = "HostName=michi-iotsuite-cloud.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=uQ9bNaYgw+LWcKpH78NIPcqLTHsWVoLF7OrJ0DIYFVE=";
-        static string iotHubUri = "michi-iotsuite-cloud.azure-devices.net";
+        static string connectionString = "HostName=sks-demo-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=OH/eB28iElMTVY8I2MLucAReOQd+kDXgr12XY3srMqs=";
+        static string iotHubUri = "sks-demo-iothub.azure-devices.net";
         static string deviceId = null;
         static int maxTemperature = 0;
         static int minTemperature = 1;
@@ -73,7 +73,7 @@ namespace simulator
         }
         static string GenerateMessage(int seq, string message)
         {
-            var msg = TelemetryData.Random(string.Format("{0}{1}",DateTime.UtcNow.ToString("yyyymmdd"),seq.ToString("0000000")),message);
+            var msg = TelemetryData.Random(deviceId,string.Format("{0}{1}",DateTime.UtcNow.ToString("yyyymmdd"),seq.ToString("0000000")),message);
             return JsonConvert.SerializeObject(msg);
         }
         static void Error(string msg)

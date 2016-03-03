@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Networking.PushNotifications;
 using Microsoft.WindowsAzure.Messaging;
 using Windows.UI.Popups;
+using System.Threading.Tasks;
 #endregion DEMO #1
 namespace UWPClient
 {
@@ -38,6 +39,25 @@ namespace UWPClient
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
+        
+        protected override async void OnActivated(IActivatedEventArgs args)
+        {
+            await ShowMessage($"args:{(args as ToastNotificationActivatedEventArgs).Argument}");
+            if (args.Kind == ActivationKind.ToastNotification)
+            {
+                var toastArgs = args as ToastNotificationActivatedEventArgs;
+
+                // Get arguments corresponding to this activation;
+                // When tapping the body of the toast caused this activation, the app receives the value of “launch” property of ;
+                // When the activation is caused by using tapping on an action inside the toast, the app receives the value of “arguments” property of ; 
+                var arguments = toastArgs.Argument;
+
+                // User input from <input> can be retrieved using the UserInput property. The UserInput is a ValueSet and the key is the pre-defined id attribute in the <input> element in the payload.
+                var input = toastArgs.UserInput["1"];
+                await ShowMessage(arguments);
+                // Navigate accordingly
+            }
+        }
         private async void InitNotificationsAsync()
         {
             var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
@@ -54,6 +74,12 @@ namespace UWPClient
             }
 
         }
+        async Task ShowMessage(string msg)
+        {
+            MessageDialog diag = new MessageDialog(msg);
+            diag.Commands.Add(new UICommand("OK"));
+            await diag.ShowAsync();
+        }
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -61,6 +87,10 @@ namespace UWPClient
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            if(e.Kind == ActivationKind.ToastNotification)
+            {
+                ShowMessage("TOAST");
+            }
             InitNotificationsAsync();
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)

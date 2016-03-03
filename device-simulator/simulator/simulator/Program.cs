@@ -120,7 +120,6 @@ namespace simulator
             {
                 i++;
                 string telemetry = GenerateMessage(i, $"message:{i}");
-
                 await deviceClient.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(Encoding.UTF8.GetBytes(telemetry)));
                 Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, telemetry);
 

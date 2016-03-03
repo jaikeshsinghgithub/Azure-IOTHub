@@ -8,6 +8,8 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.ServiceBus.Messaging;
 using System.Diagnostics;
+using System.Runtime.Serialization;
+using System.Xml;
 
 namespace sks_webjob
 {
@@ -24,11 +26,11 @@ namespace sks_webjob
         {
             NotificationHubClient hub = NotificationHubClient
                 .CreateClientFromConnectionString("Endpoint=sb://skshub.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=+toF6XlnEcBSPlDTN0WPW2XBNmpIEQnZbQUTfO2y/aY=", "sks-notification");
-            var toast = $"<toast><visual><binding template=\"ToastText01\"><text id=\"1\">{msg}</text></binding></visual></toast>";
+            var toast = $"<toast launch=\"launch_arguments\"><visual><binding template=\"ToastText01\"><text id=\"1\">{msg}</text></binding></visual></toast>";
             await hub.SendWindowsNativeNotificationAsync(toast);
         }
 
-        public static async Task LookupNotification()
+        public static void LookupNotification()
         {
             QueueClient qc = QueueClient.CreateFromConnectionString(
                 "Endpoint=sb://michiazurecontw.servicebus.windows.net/;SharedAccessKeyName=admin;SharedAccessKey=nY6VrI4Qb8/dNCi6GNpVa1ncLa8ZjcqYakucyaqaMyk=",
@@ -42,18 +44,47 @@ namespace sks_webjob
             {
                 try
                 {
-                    // Process message from queue.
-                    var msg = message.GetBody<string>();
-                    Debug.WriteLine("Body: " + msg );
-                    Debug.WriteLine("MessageID: " + message.MessageId);
-                    SendNotificationAsync(msg);
-                    // Remove message from queue.
-                    message.Complete();
+                    // Process message from event processor host.
+                    if (message.Properties.Keys.Contains("message-source") && (string)message.Properties["message-source"] == "evh")
+                    {
+                        var o = message.GetBody<System.IO.Stream>();
+                        using (var r = new StreamReader(o))
+                        {
+                            var msg = r.ReadToEnd();
+                            Console.WriteLine("Body: " + msg);
+                            Console.WriteLine("MessageID: " + message.MessageId);
+                            SendNotificationAsync(msg);
+                            // Remove message from queue.
+                            message.Complete();
+                        }
+
+                    }
+                    else
+                    {
+                        // Process message from stream analytics.
+                        var msg = message.GetBody<string>();
+                        
+                            Console.WriteLine("Body: " + msg);
+                            Console.WriteLine("MessageID: " + message.MessageId);
+                            SendNotificationAsync(msg);
+                            // Remove message from queue.
+                            message.Complete();
+                    }
                 }
-                catch (Exception)
+                catch (Exception exp)
                 {
                     // Indicates a problem, unlock message in queue.
+                    Console.WriteLine("EXCEPTION:" + exp.Message);
+                    if(exp.InnerException != null)
+                    {
+                        Console.WriteLine("INNER:" + exp.Message);
+                    }
+                    if(exp.StackTrace != null)
+                    {
+                        Console.WriteLine($"Stack:{exp.StackTrace}");
+                    }
                     message.Abandon();
+                    //message.Complete();
                 }
             }, options);
         }

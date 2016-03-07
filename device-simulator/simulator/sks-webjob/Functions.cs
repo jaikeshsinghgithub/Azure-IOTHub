@@ -10,31 +10,48 @@ using Microsoft.ServiceBus.Messaging;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Xml;
+using Newtonsoft.Json;
 
 namespace sks_webjob
 {
     public class Functions
     {
+        private static string nhConnectionString = "Endpoint=sb://skshub.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=+toF6XlnEcBSPlDTN0WPW2XBNmpIEQnZbQUTfO2y/aY=";
+        private static string hubName = "sks-notification";
+        private static string sbQueueAdminConnectinString = "Endpoint=sb://michiazurecontw.servicebus.windows.net/;SharedAccessKeyName=admin;SharedAccessKey=nY6VrI4Qb8/dNCi6GNpVa1ncLa8ZjcqYakucyaqaMyk=";
+        private static string sbQueueName = "sksdemo";
         // This function will get triggered/executed when a new message is written 
         // on an Azure Queue called queue.
         public static void ProcessQueueMessage([QueueTrigger("queue")] string message, TextWriter log)
         {
             log.WriteLine(message);
         }
-
-        private static async void SendNotificationAsync(string msg)
+        private static async Task SendNotificationAsync(string msg)
+        {
+            await SendWindowsNotificationAsync(msg);
+            await SendAndroidNotificationAsync(msg);
+        }
+        private static async Task SendWindowsNotificationAsync(string msg)
         {
             NotificationHubClient hub = NotificationHubClient
-                .CreateClientFromConnectionString("Endpoint=sb://skshub.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=+toF6XlnEcBSPlDTN0WPW2XBNmpIEQnZbQUTfO2y/aY=", "sks-notification");
+                .CreateClientFromConnectionString(nhConnectionString, hubName);
             var toast = $"<toast launch=\"launch_arguments\"><visual><binding template=\"ToastText01\"><text id=\"1\">{msg}</text></binding></visual></toast>";
-            await hub.SendWindowsNativeNotificationAsync(toast);
+            var results = await hub.SendWindowsNativeNotificationAsync(toast);
         }
-
+        private static async Task SendAndroidNotificationAsync(string msg)
+        {
+            NotificationHubClient hub = NotificationHubClient
+                .CreateClientFromConnectionString(nhConnectionString, hubName);
+            Newtonsoft.Json.Linq.JObject o = JsonConvert.DeserializeObject(msg) as Newtonsoft.Json.Linq.JObject;
+            var toast = "{data:{message:'{device} alert at {time}'}}".Replace("{device}", (string)o["deviceid"]).Replace("{time}", (string)o["time"]);
+            var results = await hub.SendGcmNativeNotificationAsync(toast);
+            
+        }
         public static void LookupNotification()
         {
             QueueClient qc = QueueClient.CreateFromConnectionString(
-                "Endpoint=sb://michiazurecontw.servicebus.windows.net/;SharedAccessKeyName=admin;SharedAccessKey=nY6VrI4Qb8/dNCi6GNpVa1ncLa8ZjcqYakucyaqaMyk=",
-                "sksdemo");
+                sbQueueAdminConnectinString,
+                sbQueueName);
             OnMessageOptions options = new OnMessageOptions();
             options.AutoComplete = false;
             options.AutoRenewTimeout = TimeSpan.FromMinutes(1);

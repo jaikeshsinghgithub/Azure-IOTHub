@@ -17,8 +17,6 @@ namespace simulator
         static string connectionString = "HostName=sks-demo-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=OH/eB28iElMTVY8I2MLucAReOQd+kDXgr12XY3srMqs=";
         static string iotHubUri = "sks-demo-iothub.azure-devices.net";
         static string deviceId = null;
-        static int maxTemperature = 0;
-        static int minTemperature = 1;
         static string deviceKey = null;
         static DeviceClient deviceClient = null;
         static Random random = new Random();
@@ -30,22 +28,19 @@ namespace simulator
         static void Main(string[] args)
         {
             #region added
-            if (args.Length < 3)
+            if (args.Length < 1)
             {
-                Error("Usage: sumulator {deviceid} {min} {max}");
+                Error("Usage: sumulator {deviceid}");
                 Wait();
                 return;
             }
             deviceId = args[0];
-            minTemperature = int.Parse(args[1]);
-            maxTemperature = int.Parse(args[2]);
 
             registryManager = RegistryManager.CreateFromConnectionString(connectionString);
             #endregion
             AddDeviceAsync().Wait();
-            //deviceKey = "OTUJwGXWV6mweq/CUSlqaEnackTI6SYXBYM3U75HbKg=";
 
-#if false
+#if true
             //AMQP (default)
             deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey));
 #else

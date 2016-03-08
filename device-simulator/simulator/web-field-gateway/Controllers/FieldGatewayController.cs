@@ -80,15 +80,20 @@ namespace web_field_gateway.Controllers
         }
         public async Task SendTelemetry(TelemetryData telemetry)
         {
+#if false
             DeviceClient dc = DeviceClient.Create(iotHubUri,
                 new DeviceAuthenticationWithRegistrySymmetricKey(
                         telemetry.DeviceId,
                         GetDeviceKey(telemetry.DeviceId)
                     ));
+#else
+            var key = GetDeviceKey(telemetry.DeviceId);
+            DeviceClient dc = DeviceClient.CreateFromConnectionString(
+                $"HostName={iotHubUri};DeviceId={telemetry.DeviceId};SharedAccessKey={key}");
+#endif
             var text = JsonConvert.SerializeObject(telemetry);
             var buffer = Encoding.UTF8.GetBytes(text);
             await dc.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(buffer));
-            
         }
     }
 }

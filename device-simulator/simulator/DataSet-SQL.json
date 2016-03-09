@@ -1,0 +1,17 @@
+{
+  "name": "AzureSQLDatasetTemplate",
+  "properties": {
+    "published": false,
+    "type": "AzureSqlTable",
+    "linkedServiceName": "AzureSqlLinkedService",
+    "typeProperties": {
+      "tableName": "AlertRule"
+    },
+    "availability": {
+      "frequency": "Hour",
+      "interval": 1
+    },
+    "external": true,
+    "policy": { }
+  }
+}

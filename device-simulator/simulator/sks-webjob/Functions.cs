@@ -46,6 +46,7 @@ namespace sks_webjob
             var toast = "{data:{message:'{device} alert at {time}'}}".Replace("{device}", (string)o["deviceid"]).Replace("{time}", (string)o["time"]);
             var results = await hub.SendGcmNativeNotificationAsync(toast);
             
+            
         }
         public static void LookupNotification()
         {

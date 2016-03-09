@@ -28,6 +28,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "device-simulators", "device
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "web-field-gateway", "web-field-gateway\web-field-gateway.csproj", "{F9BC9D10-BFEB-4790-82B3-0122EBC7CF17}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data-factory", "data-factory", "{6614BE34-8E60-406A-B14F-F0D39395A869}"
+	ProjectSection(SolutionItems) = preProject
+		DataSet-Blob.json = DataSet-Blob.json
+		DataSet-SQL.json = DataSet-SQL.json
+		LinkedService-BlobStorage.json = LinkedService-BlobStorage.json
+		LinkedService-SQL.json = LinkedService-SQL.json
+		Pipeline.json = Pipeline.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

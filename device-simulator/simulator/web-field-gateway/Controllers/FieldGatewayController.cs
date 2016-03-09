@@ -95,5 +95,6 @@ namespace web_field_gateway.Controllers
             var buffer = Encoding.UTF8.GetBytes(text);
             await dc.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(buffer));
         }
+
     }
 }

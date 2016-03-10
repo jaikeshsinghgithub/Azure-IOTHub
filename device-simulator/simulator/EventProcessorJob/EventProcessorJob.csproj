@@ -107,8 +107,11 @@
     <Compile Include="SKSEventProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\skswebjobhost - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\skswebjobhost - Web Deploy.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>

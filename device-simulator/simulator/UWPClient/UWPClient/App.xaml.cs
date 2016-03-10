@@ -63,7 +63,7 @@ namespace UWPClient
             var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
 
             var hub = new NotificationHub("sks-notification", "Endpoint=sb://skshub.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=hqP02VpOdrJhbvVB3vi/avkG1nTZhkS4pYxgQQkviRk=");
-            var result = await hub.RegisterNativeAsync(channel.Uri);
+            var result = await hub.RegisterNativeAsync(channel.Uri, new string[] { "test" });
 
             // Displays the registration ID so you know it was successful
             if (result.RegistrationId != null)

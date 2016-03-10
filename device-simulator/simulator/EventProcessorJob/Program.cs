@@ -22,7 +22,7 @@ namespace EventProcessorJob
             SKSEventProcessor.ServiceBusConnectionString = "Endpoint=sb://michiazurecontw.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=MFHzNRwJAYkqtus+6u/MGsM74nE44Z2VWmIm9S0EPbg=";
 
             string eventProcessorHostName = Guid.NewGuid().ToString();
-            EventProcessorHost eventProcessorHost = new EventProcessorHost(eventProcessorHostName, iotHubD2cEndpoint, EventHubConsumerGroup.DefaultGroupName, iotHubConnectionString, SKSEventProcessor.StorageConnectionString, "messages-events");
+            EventProcessorHost eventProcessorHost = new EventProcessorHost(eventProcessorHostName, iotHubD2cEndpoint, EventHubConsumerGroup.DefaultGroupName, iotHubConnectionString, SKSEventProcessor.StorageConnectionString,"messages-events");
             Console.WriteLine("Registering EventProcessor...");
             eventProcessorHost.RegisterEventProcessorAsync<SKSEventProcessor>().Wait();
 

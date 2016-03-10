@@ -8,7 +8,7 @@
         "typeProperties": {
           "source": {
             "type": "SqlSource",
-            "sqlReaderQuery": "select * from AlretRule"
+            "sqlReaderQuery": "select * from AlertRule"
           },
           "sink": {
             "type": "BlobSink",
@@ -30,11 +30,13 @@
         "policy": {
           "timeout": "01:00:00",
           "concurrency": 1,
-          "retry": 3
+          "retry": 3,
+          "style": "StartOfInterval"
         },
         "scheduler": {
           "frequency": "Hour",
-          "interval": 1
+          "interval": 1,
+          "style": "StartOfInterval"
         },
         "name": "CopyActivityTemplate"
       }

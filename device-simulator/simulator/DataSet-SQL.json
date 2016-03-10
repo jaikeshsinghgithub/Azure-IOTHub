@@ -9,7 +9,8 @@
     },
     "availability": {
       "frequency": "Hour",
-      "interval": 1
+      "interval": 1,
+      "style": "StartOfInterval"
     },
     "external": true,
     "policy": { }

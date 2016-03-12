@@ -18,13 +18,19 @@ namespace simulator
         public DCAC DCorAC { get; set; }
         public string ADSLor3G { get; set; }
         public string Message { get; set; }
-        public static TelemetryData Random(string deviceID,string seqNo, string msg)
+        public static TelemetryData Random(string deviceID,string seqNo, string msg, int min, int max)
         {
+            TelemetryTypes type = (TelemetryTypes)random.Next(0, 2);
+            var rnd = random.Next(0, 101);
+            if (rnd <= max && rnd >= min)
+            {
+                type = TelemetryTypes.C;
+            }
             var ret = new TelemetryData()
             {
                 SeqNo = seqNo,
                 Timestamp = DateTime.UtcNow,
-                Type = (TelemetryTypes)random.Next(0, 2),
+                Type = type,
                 DeviceId = deviceID,
                 UID = "UID-" + Guid.NewGuid().ToString(),
                 DCorAC = (DCAC)random.Next(0, 1),

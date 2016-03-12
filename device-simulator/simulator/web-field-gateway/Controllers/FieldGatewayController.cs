@@ -14,6 +14,7 @@ using web_field_gateway.Models;
 using Microsoft.Azure.Devices.Client;
 using Newtonsoft.Json;
 using System.Text;
+using System.Diagnostics;
 
 namespace web_field_gateway.Controllers
 {
@@ -80,6 +81,7 @@ namespace web_field_gateway.Controllers
         }
         public async Task SendTelemetry(TelemetryData telemetry)
         {
+            try {
 #if false
             DeviceClient dc = DeviceClient.Create(iotHubUri,
                 new DeviceAuthenticationWithRegistrySymmetricKey(
@@ -87,14 +89,39 @@ namespace web_field_gateway.Controllers
                         GetDeviceKey(telemetry.DeviceId)
                     ));
 #else
-            var key = GetDeviceKey(telemetry.DeviceId);
-            DeviceClient dc = DeviceClient.CreateFromConnectionString(
-                $"HostName={iotHubUri};DeviceId={telemetry.DeviceId};SharedAccessKey={key}");
+                var key = GetDeviceKey(telemetry.DeviceId);
+                DeviceClient dc = DeviceClient.CreateFromConnectionString(
+                    $"HostName={iotHubUri};DeviceId={telemetry.DeviceId};SharedAccessKey={key}");
 #endif
-            var text = JsonConvert.SerializeObject(telemetry);
-            var buffer = Encoding.UTF8.GetBytes(text);
-            await dc.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(buffer));
+                var text = JsonConvert.SerializeObject(telemetry);
+                var buffer = Encoding.UTF8.GetBytes(text);
+                await dc.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(buffer));
+            }catch(Exception exp)
+            {
+                throw new HttpException(exp.Message);
+            }
         }
-
+        [HttpGet]
+        public HttpResponseMessage ReceiveCommand([FromUri]string deviceId)
+        {
+            try {
+                var fn = HttpContext.Current.Server.MapPath($"~/App_Data/{deviceId}.txt");
+                if (File.Exists(fn))
+                {
+                    var text = File.ReadAllText(fn);
+                    Trace.WriteLine($"{fn}::{text}");
+                    File.Delete(fn);
+                    return Request.CreateResponse<string>(HttpStatusCode.OK, text);
+                }
+                else
+                {
+                    System.Diagnostics.Trace.WriteLine($"Receive File {fn}...Not exists");
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }catch(Exception exp)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, exp.Message);
+            }
+        }
     }
 }

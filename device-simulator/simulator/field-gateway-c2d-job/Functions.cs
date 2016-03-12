@@ -25,6 +25,22 @@ namespace field_gateway_c2d_job
             var devices = await mgr.GetDevicesAsync(1000);
             return devices.Select(d => $"HostName={hostname};DeviceId={d.Id};SharedAccessKey={d.Authentication.SymmetricKey.PrimaryKey}").ToArray();
         }
+        private static void WriteFile(string deviceId,string log)
+        {
+            var root = Environment.GetEnvironmentVariable("WEBROOT_PATH");
+            var fn = System.IO.Path.Combine(root, $"App_Data\\{deviceId}.txt");
+            if (!System.IO.File.Exists(fn))
+            {
+                using (var sw = File.CreateText(fn))
+                {
+                    sw.Write(log);
+                }
+            }
+            else
+            {
+                File.AppendAllText(fn, log + Environment.NewLine);
+            }
+        }
         public static async Task ReceiveC2DAsync()
         {
             while (true)
@@ -35,18 +51,27 @@ namespace field_gateway_c2d_job
                 {
                     foreach (var conn in conns)
                     {
+                        Thread.Sleep(1000);
                         try
                         {
+                            Console.WriteLine($"Checking [{conn}]...");
                             DeviceClient deviceClient = DeviceClient.CreateFromConnectionString(conn);
-                            var cmd = await deviceClient.ReceiveAsync(TimeSpan.FromSeconds(100));
+                            var cmd = await deviceClient.ReceiveAsync(TimeSpan.FromSeconds(1000));
                             if (cmd != null)
                             {
+                                Console.WriteLine($"...Got message");
                                 using (var sr = new StreamReader(cmd.GetBodyStream()))
                                 {
                                     var msg = sr.ReadToEnd();
+                                    var deviceId = conn.Split(';')[1].Split('=')[1];
+                                    WriteFile(deviceId, msg);
                                     Console.WriteLine($"*** Received:{msg}");
                                 }
                                 await deviceClient.CompleteAsync(cmd);
+                            }
+                            else
+                            {
+                                Console.WriteLine("...no message");
                             }
                         }
                         catch (Exception exp)
@@ -56,7 +81,7 @@ namespace field_gateway_c2d_job
                         }
                     }
                 }
-                Thread.Sleep(1000);
+                
             }
         }
     }

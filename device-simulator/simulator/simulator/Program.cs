@@ -49,7 +49,7 @@ namespace simulator
                                                 Microsoft.Azure.Devices.Client.TransportType.Http1);
 #endif
             SendDeviceToCloudMessagesAsync();
-            ReceiveCommandAsync();
+            //ReceiveCommandAsync();
             Wait("Press [ENTER] to exit...");
 
             RemoveDeviceAsync().Wait();
@@ -130,6 +130,7 @@ namespace simulator
                 if (cmd != null)
                 {
                     Success(Encoding.UTF8.GetString(cmd.GetBytes()));
+                    await deviceClient.CompleteAsync(cmd);
                 }
 
                 Thread.Sleep(1000);

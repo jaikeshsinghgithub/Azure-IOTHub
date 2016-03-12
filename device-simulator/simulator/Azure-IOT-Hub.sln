@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simulator", "simulator\simulator.csproj", "{92F39610-713B-4FC1-BEBA-9ABCCD20F53E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "console-simulator", "simulator\console-simulator.csproj", "{92F39610-713B-4FC1-BEBA-9ABCCD20F53E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPClient", "UWPClient\UWPClient\UWPClient.csproj", "{34EE42DE-424E-436B-AD30-994197EC6ABB}"
 EndProject
@@ -11,14 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sks-webjob", "sks-webjob\sk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sks-webjob-sdk-version", "sks-webjob-sdk-version\sks-webjob-sdk-version.csproj", "{7610A26C-5ADD-43D8-90DC-7053E1F84A37}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StreamAnalytics", "StreamAnalytics", "{FAB1D8E9-7189-4538-A2E8-76DA06F00B25}"
-	ProjectSection(SolutionItems) = preProject
-		query.txt = query.txt
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "queue-to-notificationhub", "queue-to-notificationhub", "{CBCA2E2D-F4C0-4DC5-90B4-4B7854A67014}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "webjobs-notitification-hub", "webjobs-notitification-hub", "{CBCA2E2D-F4C0-4DC5-90B4-4B7854A67014}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "webjobs-streamanalytics-alternative", "webjobs-streamanalytics-alternative", "{14C8A4F9-DFA1-4930-8D31-18A86A749058}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iothub-to-queue", "iothub-to-queue", "{14C8A4F9-DFA1-4930-8D31-18A86A749058}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventProcessorJob", "EventProcessorJob\EventProcessorJob.csproj", "{4E0041D4-EEA3-433E-8C8A-1CC95F6863C0}"
 EndProject
@@ -40,6 +35,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "notification-hub-app", "notification-hub-app", "{4B33C45B-205B-4BD0-928E-A91BB7634ED9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nhsender", "nhsender\nhsender.csproj", "{E6A66935-5E99-4884-B0A5-2ABC89FA5724}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "field-gateway", "field-gateway", "{E994180C-075C-41B8-9D16-A619346E8030}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "event-processor-host", "event-processor-host", "{59944CF2-E82C-4BE2-A0D9-E57A6E7AC185}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "stream-analytics", "stream-analytics", "{116E22F5-21C7-43D8-B9D2-1927832BFBB0}"
+	ProjectSection(SolutionItems) = preProject
+		query.txt = query.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "field-gateway-c2d-job", "field-gateway-c2d-job\field-gateway-c2d-job.csproj", "{D26F0FF3-54A7-494B-B213-B10F024709E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -185,6 +191,22 @@ Global
 		{E6A66935-5E99-4884-B0A5-2ABC89FA5724}.Release|x64.Build.0 = Release|Any CPU
 		{E6A66935-5E99-4884-B0A5-2ABC89FA5724}.Release|x86.ActiveCfg = Release|Any CPU
 		{E6A66935-5E99-4884-B0A5-2ABC89FA5724}.Release|x86.Build.0 = Release|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Debug|ARM.Build.0 = Debug|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Debug|x64.Build.0 = Debug|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Debug|x86.Build.0 = Debug|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Release|ARM.ActiveCfg = Release|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Release|ARM.Build.0 = Release|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Release|x64.ActiveCfg = Release|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Release|x64.Build.0 = Release|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Release|x86.ActiveCfg = Release|Any CPU
+		{D26F0FF3-54A7-494B-B213-B10F024709E6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,9 +216,12 @@ Global
 		{34EE42DE-424E-436B-AD30-994197EC6ABB} = {4B33C45B-205B-4BD0-928E-A91BB7634ED9}
 		{696D0755-8248-4861-88A9-46789AA982F2} = {CBCA2E2D-F4C0-4DC5-90B4-4B7854A67014}
 		{7610A26C-5ADD-43D8-90DC-7053E1F84A37} = {CBCA2E2D-F4C0-4DC5-90B4-4B7854A67014}
-		{4E0041D4-EEA3-433E-8C8A-1CC95F6863C0} = {14C8A4F9-DFA1-4930-8D31-18A86A749058}
-		{53C10326-079B-4DFF-8906-04C0F4F7C4C8} = {14C8A4F9-DFA1-4930-8D31-18A86A749058}
-		{F9BC9D10-BFEB-4790-82B3-0122EBC7CF17} = {3ABFBB38-0C4D-4204-B6DF-956F4FF7228C}
+		{4E0041D4-EEA3-433E-8C8A-1CC95F6863C0} = {59944CF2-E82C-4BE2-A0D9-E57A6E7AC185}
+		{53C10326-079B-4DFF-8906-04C0F4F7C4C8} = {59944CF2-E82C-4BE2-A0D9-E57A6E7AC185}
+		{F9BC9D10-BFEB-4790-82B3-0122EBC7CF17} = {E994180C-075C-41B8-9D16-A619346E8030}
 		{E6A66935-5E99-4884-B0A5-2ABC89FA5724} = {4B33C45B-205B-4BD0-928E-A91BB7634ED9}
+		{59944CF2-E82C-4BE2-A0D9-E57A6E7AC185} = {14C8A4F9-DFA1-4930-8D31-18A86A749058}
+		{116E22F5-21C7-43D8-B9D2-1927832BFBB0} = {14C8A4F9-DFA1-4930-8D31-18A86A749058}
+		{D26F0FF3-54A7-494B-B213-B10F024709E6} = {E994180C-075C-41B8-9D16-A619346E8030}
 	EndGlobalSection
 EndGlobal

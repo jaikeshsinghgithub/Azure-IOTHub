@@ -23,7 +23,7 @@ namespace gw_simulator
             {
                 type = 2;
             }
-
+            data.Temperature = rnd;
             data.SeqNo = seqNo;
             data.Timestamp = DateTime.UtcNow;
             data.Type = type;

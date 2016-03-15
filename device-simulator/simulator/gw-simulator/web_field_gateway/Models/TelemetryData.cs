@@ -64,6 +64,17 @@ namespace IOTGateway.Models
             set { this._seqNo = value; }
         }
         
+        private int? _temperature;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public int? Temperature
+        {
+            get { return this._temperature; }
+            set { this._temperature = value; }
+        }
+        
         private DateTimeOffset? _timestamp;
         
         /// <summary>
@@ -135,6 +146,10 @@ namespace IOTGateway.Models
             if (this.SeqNo != null)
             {
                 outputObject["SeqNo"] = this.SeqNo;
+            }
+            if (this.Temperature != null)
+            {
+                outputObject["Temperature"] = this.Temperature.Value;
             }
             if (this.Timestamp != null)
             {

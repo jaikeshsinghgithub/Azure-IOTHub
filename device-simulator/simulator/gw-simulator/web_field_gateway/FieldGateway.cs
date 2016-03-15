@@ -89,7 +89,7 @@ namespace IOTGateway
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = new HttpRequestMessage();
-            httpRequest.Method = HttpMethod.Post;
+            httpRequest.Method = HttpMethod.Get;
             httpRequest.RequestUri = new Uri(url);
             
             // Set Credentials
@@ -142,7 +142,7 @@ namespace IOTGateway
                 }
                 if (responseDoc != null)
                 {
-                    resultModel = ((string)responseDoc);
+                    resultModel = responseDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 }
                 result.Body = resultModel;
             }

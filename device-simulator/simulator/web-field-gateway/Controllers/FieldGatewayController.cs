@@ -96,7 +96,8 @@ namespace web_field_gateway.Controllers
                 var text = JsonConvert.SerializeObject(telemetry);
                 var buffer = Encoding.UTF8.GetBytes(text);
                 await dc.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(buffer));
-            }catch(Exception exp)
+            }
+            catch (Exception exp)
             {
                 throw new HttpException(exp.Message);
             }

@@ -47,7 +47,7 @@ namespace IOTGateway
             : base()
         {
             this._fieldGateway = new FieldGateway(this);
-            this._baseUri = new Uri("http://foo.azurewebsites.net:80");
+            this._baseUri = new Uri("http://skswebjobhost.azurewebsites.net:80");
         }
         
         /// <summary>
@@ -61,7 +61,7 @@ namespace IOTGateway
             : base(handlers)
         {
             this._fieldGateway = new FieldGateway(this);
-            this._baseUri = new Uri("http://foo.azurewebsites.net:80");
+            this._baseUri = new Uri("http://skswebjobhost.azurewebsites.net:80");
         }
         
         /// <summary>
@@ -78,7 +78,7 @@ namespace IOTGateway
             : base(rootHandler, handlers)
         {
             this._fieldGateway = new FieldGateway(this);
-            this._baseUri = new Uri("http://foo.azurewebsites.net:80");
+            this._baseUri = new Uri("http://skswebjobhost.azurewebsites.net:80");
         }
         
         /// <summary>

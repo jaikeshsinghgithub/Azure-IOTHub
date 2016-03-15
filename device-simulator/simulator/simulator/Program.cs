@@ -20,7 +20,8 @@ namespace simulator
         static string deviceKey = null;
         static DeviceClient deviceClient = null;
         static Random random = new Random();
-        
+        static int max = 100;
+        static int min = 0;
         /// <summary>
         /// Simulator a device
         /// </summary>
@@ -28,13 +29,15 @@ namespace simulator
         static void Main(string[] args)
         {
             #region added
-            if (args.Length < 1)
+            if (args.Length < 3)
             {
-                Error("Usage: sumulator {deviceid}");
+                Error("Usage: sumulator {deviceid} {max} {min}");
                 Wait();
                 return;
             }
             deviceId = args[0];
+            max = int.Parse(args[2]);
+            min = int.Parse(args[1]);
 
             registryManager = RegistryManager.CreateFromConnectionString(connectionString);
             #endregion
@@ -54,6 +57,11 @@ namespace simulator
 
             RemoveDeviceAsync().Wait();
         }
+        static string GenerateMessage(int seq, string message)
+        {
+            var msg = TelemetryData.Random(deviceId, string.Format("{0}{1}", DateTime.UtcNow.ToString("yyyymmdd"), seq.ToString("0000000")), message, min, max);
+            return JsonConvert.SerializeObject(msg);
+        }
         static void Wait(string msg = null)
         {
             if (string.IsNullOrEmpty(msg))
@@ -66,11 +74,7 @@ namespace simulator
             }
             Console.ReadLine();
         }
-        static string GenerateMessage(int seq, string message)
-        {
-            var msg = TelemetryData.Random(deviceId,string.Format("{0}{1}",DateTime.UtcNow.ToString("yyyymmdd"),seq.ToString("0000000")),message);
-            return JsonConvert.SerializeObject(msg);
-        }
+        
         static void Error(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -130,6 +134,7 @@ namespace simulator
                 if (cmd != null)
                 {
                     Success(Encoding.UTF8.GetString(cmd.GetBytes()));
+                    await deviceClient.CompleteAsync(cmd);
                 }
 
                 Thread.Sleep(1000);

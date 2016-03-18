@@ -177,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\skswebjobhost - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\test.pubxml" />
     <None Include="Properties\PublishProfiles\webfieldgateway.pubxml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <None Include="Web.Debug.config">

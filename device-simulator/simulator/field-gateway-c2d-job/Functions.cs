@@ -56,7 +56,7 @@ namespace field_gateway_c2d_job
                         {
                             Console.WriteLine($"Checking [{conn}]...");
                             DeviceClient deviceClient = DeviceClient.CreateFromConnectionString(conn);
-                            var cmd = await deviceClient.ReceiveAsync(TimeSpan.FromSeconds(1000));
+                            var cmd = await deviceClient.ReceiveAsync(TimeSpan.FromMilliseconds(3000));
                             if (cmd != null)
                             {
                                 Console.WriteLine($"...Got message");

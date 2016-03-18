@@ -8,14 +8,15 @@ using Microsoft.Azure.Devices.Common.Exceptions;
 using Microsoft.Azure.Devices.Client;
 using System.Threading;
 using Newtonsoft.Json;
+using System.Configuration;
 
 namespace simulator
 {
     class Program
     {
         static RegistryManager registryManager;
-        static string connectionString = "HostName=sks-demo-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=OH/eB28iElMTVY8I2MLucAReOQd+kDXgr12XY3srMqs=";
-        static string iotHubUri = "sks-demo-iothub.azure-devices.net";
+        static string connectionString = "";
+        static string iotHubUri = "";
         static string deviceId = null;
         static string deviceKey = null;
         static DeviceClient deviceClient = null;
@@ -38,6 +39,9 @@ namespace simulator
             deviceId = args[0];
             max = int.Parse(args[2]);
             min = int.Parse(args[1]);
+
+            connectionString = ConfigurationManager.AppSettings["iotHubConnectionString"];
+            iotHubUri = ConfigurationManager.AppSettings["iotHubUri"];
 
             registryManager = RegistryManager.CreateFromConnectionString(connectionString);
             #endregion

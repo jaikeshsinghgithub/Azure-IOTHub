@@ -42,7 +42,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "event-processor-host", "eve
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "stream-analytics", "stream-analytics", "{116E22F5-21C7-43D8-B9D2-1927832BFBB0}"
 	ProjectSection(SolutionItems) = preProject
-		query.txt = query.txt
+		write-to-servicebus-queue.txt = write-to-servicebus-queue.txt
+		write-to-sql-db.txt = write-to-sql-db.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "field-gateway-c2d-job", "field-gateway-c2d-job\field-gateway-c2d-job.csproj", "{D26F0FF3-54A7-494B-B213-B10F024709E6}"

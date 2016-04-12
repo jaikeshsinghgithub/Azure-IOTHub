@@ -126,14 +126,14 @@ namespace gw_simulator
                 {
                     var telemetry = GenerateMessage(i, $"message:{i}");
                     var text = JsonConvert.SerializeObject(telemetry);
-                    Log($"Sending {text}");
+                    Log($"[{i}]Sending {text}");
                     var buffer = Encoding.UTF8.GetBytes(text);
                     var url = ConfigurationManager.AppSettings["gwhost"] + "/api/FieldGateway/SendTelemetry";
                     HttpWebRequest req = HttpWebRequest.Create(url) as HttpWebRequest;
                     req.Method = "POST";
                     req.ContentType = "application/json";
                     req.GetRequestStream().Write(buffer, 0, buffer.Length);
-
+                    
                     using (var resp = req.GetResponse())
                     {
                         using (var respStream = resp.GetResponseStream())
@@ -144,7 +144,8 @@ namespace gw_simulator
                             }
                         }
                     }
-                    Thread.Sleep(3000);
+                    
+                    Thread.Sleep(500);
                 }
                 catch(Exception exp)
                 {

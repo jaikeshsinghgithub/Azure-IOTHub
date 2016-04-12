@@ -20,15 +20,24 @@ namespace web_field_gateway.Controllers
 {
     public class FieldGatewayController : ApiController
     {
+#if false
         static string connectionString = "HostName=sks-demo-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=OH/eB28iElMTVY8I2MLucAReOQd+kDXgr12XY3srMqs=";
         static string iotHubUri = "sks-demo-iothub.azure-devices.net";
+#else
+        static string connectionString = "HostName=sks-s1.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=1eG1WhdWx2mTMlHbBFqooTuoYvym7PMwTl4p8XqNaWE=";
+        static string iotHubUri = "sks-s1.azure-devices.net";
+#endif
         private void SaveDeviceIdentity(string deviceId, string deviceKey)
         {
             var fn = Path.Combine(HttpContext.Current.Server.MapPath("~/APP_DATA"),
                                 deviceId);
+            if (File.Exists(fn))
+            {
+                File.Delete(fn);
+            }
             File.WriteAllText(fn, deviceKey);
         }
-        private string GetDeviceKey(string deviceId)
+        private async Task<string> GetDeviceKey(string deviceId)
         {
             var fn = Path.Combine(HttpContext.Current.Server.MapPath("~/APP_DATA"),
                                 deviceId);
@@ -38,7 +47,7 @@ namespace web_field_gateway.Controllers
             }
             else
             {
-                return string.Empty;
+                return await Register(deviceId);
             }
         }
         private void DeleteDeviceKey(string deviceId)
@@ -89,23 +98,33 @@ namespace web_field_gateway.Controllers
                         GetDeviceKey(telemetry.DeviceId)
                     ));
 #else
-                var key = GetDeviceKey(telemetry.DeviceId);
+                var key = await GetDeviceKey(telemetry.DeviceId);
                 DeviceClient dc = DeviceClient.CreateFromConnectionString(
-                    $"HostName={iotHubUri};DeviceId={telemetry.DeviceId};SharedAccessKey={key}");
+                    $"HostName={iotHubUri};DeviceId={telemetry.DeviceId};SharedAccessKey={key}",
+                    Microsoft.Azure.Devices.Client.TransportType.Amqp_Tcp_Only);
 #endif
                 var text = JsonConvert.SerializeObject(telemetry);
                 var buffer = Encoding.UTF8.GetBytes(text);
                 await dc.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(buffer));
+                await dc.CloseAsync();
             }
-            catch (Exception exp)
+            catch(Exception exp)
             {
-                throw new HttpException(exp.Message);
+                System.Diagnostics.Trace.WriteLine($"[SendTelemetry]{exp.Message}");
+                System.Diagnostics.Trace.WriteLine($"Stack Trace: {exp.StackTrace}");
+                if (exp.InnerException != null)
+                {
+                    System.Diagnostics.Trace.WriteLine($"      - {exp.InnerException.Message}");
+                    System.Diagnostics.Trace.WriteLine($"      - {exp.InnerException.StackTrace}");
+                }
+                throw;
             }
         }
         [HttpGet]
         public HttpResponseMessage ReceiveCommand([FromUri]string deviceId)
         {
-            try {
+            try
+            {
                 var fn = HttpContext.Current.Server.MapPath($"~/App_Data/{deviceId}.txt");
                 if (File.Exists(fn))
                 {
@@ -119,9 +138,17 @@ namespace web_field_gateway.Controllers
                     System.Diagnostics.Trace.WriteLine($"Receive File {fn}...Not exists");
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
-            }catch(Exception exp)
+            }
+            catch(Exception exp)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, exp.Message);
+                System.Diagnostics.Trace.WriteLine($"[ReceiveCommand]{exp.Message}");
+                System.Diagnostics.Trace.WriteLine($"Stack Trace: {exp.StackTrace}");
+                if (exp.InnerException != null)
+                {
+                    System.Diagnostics.Trace.WriteLine($"      - {exp.InnerException.Message}");
+                    System.Diagnostics.Trace.WriteLine($"      - {exp.InnerException.StackTrace}");
+                }
+                throw;
             }
         }
     }

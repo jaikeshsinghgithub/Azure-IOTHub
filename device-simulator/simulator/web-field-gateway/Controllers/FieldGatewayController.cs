@@ -15,18 +15,20 @@ using Microsoft.Azure.Devices.Client;
 using Newtonsoft.Json;
 using System.Text;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace web_field_gateway.Controllers
 {
     public class FieldGatewayController : ApiController
     {
-#if false
-        static string connectionString = "HostName=sks-demo-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=OH/eB28iElMTVY8I2MLucAReOQd+kDXgr12XY3srMqs=";
-        static string iotHubUri = "sks-demo-iothub.azure-devices.net";
-#else
-        static string connectionString = "HostName=sks-s1.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=1eG1WhdWx2mTMlHbBFqooTuoYvym7PMwTl4p8XqNaWE=";
-        static string iotHubUri = "sks-s1.azure-devices.net";
-#endif
+        static string connectionString = null;
+        static string iotHubUri = null;
+
+        static FieldGatewayController()
+        {
+            connectionString = ConfigurationManager.AppSettings["iotHubOwnerConnectionString"];
+            iotHubUri = ConfigurationManager.AppSettings["iotHubUrl"];
+        }
         private void SaveDeviceIdentity(string deviceId, string deviceKey)
         {
             var fn = Path.Combine(HttpContext.Current.Server.MapPath("~/APP_DATA"),
@@ -101,7 +103,7 @@ namespace web_field_gateway.Controllers
                 var key = await GetDeviceKey(telemetry.DeviceId);
                 DeviceClient dc = DeviceClient.CreateFromConnectionString(
                     $"HostName={iotHubUri};DeviceId={telemetry.DeviceId};SharedAccessKey={key}",
-                    Microsoft.Azure.Devices.Client.TransportType.Amqp_Tcp_Only);
+                    Microsoft.Azure.Devices.Client.TransportType.Amqp);
 #endif
                 var text = JsonConvert.SerializeObject(telemetry);
                 var buffer = Encoding.UTF8.GetBytes(text);

@@ -21,7 +21,7 @@ namespace gw_simulator
             var rnd = random.Next(0, 101);
             if (rnd <= max && rnd >= min)
             {
-                type = 2;
+                type = 1;
             }
             data.Temperature = rnd;
             data.SeqNo = seqNo;

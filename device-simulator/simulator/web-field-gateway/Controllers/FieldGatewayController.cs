@@ -74,6 +74,9 @@ namespace web_field_gateway.Controllers
             catch (DeviceAlreadyExistsException)
             {
                 device = await registryManager.GetDeviceAsync(deviceId);
+            }catch(Microsoft.Azure.Devices.Common.Exceptions.DeviceAlreadyExistsException)
+            {
+                device = await registryManager.GetDeviceAsync(deviceId);
             }
             if(device != null)
             {

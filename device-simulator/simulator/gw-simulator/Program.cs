@@ -68,13 +68,13 @@ namespace gw_simulator
 
             //SendTelemetry2();
             //ReceiveCommandAsync();
-            Thread send = new Thread(SendTelemetry2);
-            Thread recv = new Thread(ReceiveCommand2);
+            Thread send = new Thread(SendTelemetry_SKS);// SendTelemetry_SKS);
+            //Thread recv = new Thread(ReceiveCommand2);
             send.Start();
-            recv.Start();
+            //recv.Start();
             Wait("Press [ENTER] to exit...");
             send.Join(3000);
-            recv.Join(3000);
+            //recv.Join(3000);
             Continue = false;
         }
        static void ReceiveCommand2()
@@ -153,6 +153,52 @@ namespace gw_simulator
                 }
             }
 
+        }
+        static void SendTelemetry_SKS()
+        {
+            //int i = 0;
+            for(int i = 0; i < 500; i ++)
+            {
+                //i++;
+                try
+                {
+                    var text = GenerateMessage(deviceId);
+                    Log($"[{i}]Sending {text}");
+                    var buffer = Encoding.UTF8.GetBytes(text);
+                    //var url = "http://sksappgateway.azurewebsites.net/uisgw/api/Receive";
+                    var url = "http://sksiotdev.azurewebsites.net/uisgw/api/Receive";
+                    HttpWebRequest req = HttpWebRequest.Create(url) as HttpWebRequest;
+                    req.Method = "POST";
+                    req.ContentType = "application/json";
+                    req.GetRequestStream().Write(buffer, 0, buffer.Length);
+                    Log($"Remote Url:{req.RequestUri.ToString()}");
+                    using (var resp = req.GetResponse())
+                    {
+                        using (var respStream = resp.GetResponseStream())
+                        {
+                            using (var sr = new StreamReader(respStream))
+                            {
+                                var cmd = sr.ReadToEnd();
+                            }
+                        }
+                    }
+
+                    Thread.Sleep(500);
+                }
+                catch (Exception exp)
+                {
+                    Error($"SEND::Exception[{exp.Message}]");
+                }
+            }
+
+        }
+        static string GenerateMessage(string deviceId)
+        {
+            var resp = "{\"id\": 0,\"sno\": \"string\",\"sigtime\": \"string\",\"crtime\": \"string\",\"catg\": \"string\",\"mno\": \"{$deviceId$}\"" +
+                          ",\"uid\": \"string\",\"power\": \"string\",\"lan\": \"string\",\"scode\": \"string\",\"status\": \"string\",\"R6scode\": \"string\"}";
+            resp = resp.Replace("{$deviceId$}", deviceId);
+
+            return resp;
         }
         static TelemetryData GenerateMessage(int seq, string message)
         {

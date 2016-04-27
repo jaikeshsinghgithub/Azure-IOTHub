@@ -22,6 +22,8 @@ namespace simulator
         static Random random = new Random();
         static int max = 100;
         static int min = 0;
+        static int duration = 60;
+        static bool run = true;
         static private DeviceClient CreateDeviceClient(string deviceId, string deviceKey)
         {
 #if true
@@ -50,7 +52,7 @@ namespace simulator
             deviceId = args[0];
             max = int.Parse(args[2]);
             min = int.Parse(args[1]);
-
+            run = true;
             connectionString = ConfigurationManager.AppSettings["iotHubConnectionString"];
             iotHubUri = ConfigurationManager.AppSettings["iotHubUri"];
 
@@ -62,7 +64,7 @@ namespace simulator
             SendDeviceToCloudMessagesAsync();
             ReceiveCommandAsync();
             Wait("Press [ENTER] to exit...");
-
+            run = false;
             RemoveDeviceAsync().Wait();
         }
         static string GenerateMessage(int seq, string message)
@@ -116,29 +118,37 @@ namespace simulator
             {
                 device = await registryManager.GetDeviceAsync(deviceId);
             }
-            deviceKey = device.Authentication.SymmetricKey.PrimaryKey;
+            deviceKey = device.Authentication.SymmetricKey.SecondaryKey;
             Log($"device id {deviceId} : {deviceKey}");
         }
 
         private static async void SendDeviceToCloudMessagesAsync()
         {
             int i = 0;
-            while (true)
+            DateTime start = DateTime.Now;
+            while (run)
             {
                 i++;
                 string telemetry = GenerateMessage(i, $"message:{i}");
                 DeviceClient deviceClient = CreateDeviceClient(deviceId, deviceKey);
                 await deviceClient.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(Encoding.UTF8.GetBytes(telemetry)));
-                
-                Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, telemetry);
+                await deviceClient.CloseAsync();
+                Console.WriteLine("{0} ==> Sending message: {1}", DateTime.Now, telemetry);
 
-                Thread.Sleep(500);
+                Thread.Sleep(100);
+
+                var time = DateTime.Now - start;
+                if(time.Seconds >= duration)
+                {
+                    Success($"Sent {i} messages, druation {time.Seconds} seconds");
+                    run = false;
+                }
             }
         }
 
         private async static void ReceiveCommandAsync()
         {
-            while (true)
+            while (run)
             {
                 DeviceClient deviceClient = CreateDeviceClient(deviceId, deviceKey);
                 var cmd = await deviceClient.ReceiveAsync();
@@ -148,7 +158,7 @@ namespace simulator
                     await deviceClient.CompleteAsync(cmd);
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
             }
         }
     }

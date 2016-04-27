@@ -25,7 +25,7 @@ namespace simulator
             var rnd = random.Next(0, 101);
             if (rnd <= max && rnd >= min)
             {
-                type = TelemetryTypes.C;
+                type = TelemetryTypes.B;
             }
             var ret = new TelemetryData()
             {

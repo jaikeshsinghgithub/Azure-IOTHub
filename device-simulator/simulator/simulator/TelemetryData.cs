@@ -19,6 +19,8 @@ namespace simulator
         public DCAC DCorAC { get; set; }
         public string ADSLor3G { get; set; }
         public string Message { get; set; }
+
+        public int MessageType { get; set; }
         public static TelemetryData Random(string deviceID,string seqNo, string msg, int min, int max)
         {
             TelemetryTypes type = (TelemetryTypes)random.Next(0, 2);

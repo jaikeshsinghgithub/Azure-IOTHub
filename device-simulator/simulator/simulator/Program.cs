@@ -26,7 +26,7 @@ namespace simulator
         static bool run = true;
         static private DeviceClient CreateDeviceClient(string deviceId, string deviceKey)
         {
-#if true
+#if false
             //AMQP (default)
             return DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey),
                 Microsoft.Azure.Devices.Client.TransportType.Amqp_WebSocket_Only);
@@ -59,7 +59,6 @@ namespace simulator
             registryManager = RegistryManager.CreateFromConnectionString(connectionString);
             #endregion
             AddDeviceAsync().Wait();
-
 
             SendDeviceToCloudMessagesAsync();
             ReceiveCommandAsync();
@@ -144,6 +143,7 @@ namespace simulator
                     run = false;
                 }
             }
+            Log("Exit SendMessage()...");
         }
 
         private async static void ReceiveCommandAsync()

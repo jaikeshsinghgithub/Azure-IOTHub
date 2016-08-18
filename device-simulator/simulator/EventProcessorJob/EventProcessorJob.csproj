@@ -115,6 +115,7 @@
     <None Include="Properties\PublishProfiles\byddemojob - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\skswebjobhost - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\skswebjobhost - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\WISTRON-DEMO-APP - Web Deploy.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
   <ItemGroup>

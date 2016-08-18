@@ -23,6 +23,7 @@ namespace simulator
         static int max = 100;
         static int min = 0;
         static int duration = 60;
+        static string tags = "";
         static bool run = true;
         static private DeviceClient CreateDeviceClient(string deviceId, string deviceKey)
         {
@@ -43,15 +44,21 @@ namespace simulator
         static void Main(string[] args)
         {
             #region added
-            if (args.Length < 3)
+            if (args.Length < 4)
             {
-                Error("Usage: sumulator {deviceid} {max} {min}");
+                Error("Usage: sumulator {deviceid} {max} {min} {tags}");
                 Wait();
                 return;
             }
             deviceId = args[0];
             max = int.Parse(args[2]);
             min = int.Parse(args[1]);
+
+            if(args.Length == 4)
+            {
+                tags = args[3];
+            }
+
             run = true;
             connectionString = ConfigurationManager.AppSettings["iotHubConnectionString"];
             iotHubUri = ConfigurationManager.AppSettings["iotHubUri"];
@@ -59,7 +66,7 @@ namespace simulator
             registryManager = RegistryManager.CreateFromConnectionString(connectionString);
             #endregion
             AddDeviceAsync().Wait();
-            
+
             SendDeviceToCloudMessagesAsync();
             ReceiveCommandAsync();
             Wait("Press [ENTER] to exit...");
@@ -83,7 +90,7 @@ namespace simulator
             }
             Console.ReadLine();
         }
-        
+
         static void Error(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -112,6 +119,16 @@ namespace simulator
             try
             {
                 device = await registryManager.AddDeviceAsync(new Device(deviceId));
+                
+
+                if (string.IsNullOrEmpty(tags) == false)
+                {
+                    ServiceProperties sps = new ServiceProperties();
+                    sps.Tags.AddRange(tags.Split(','));
+                    sps.ETag = device.ServiceProperties.ETag;
+                    var properties = await registryManager.SetServicePropertiesAsync(deviceId, sps);
+                }
+                //device = await registryManager.GetDeviceAsync(deviceId);
             }
             catch (DeviceAlreadyExistsException)
             {
@@ -120,7 +137,7 @@ namespace simulator
             deviceKey = device.Authentication.SymmetricKey.SecondaryKey;
             Log($"device id {deviceId} : {deviceKey}");
 
-            
+            Log($"Device Tags:{string.Join(",",device.ServiceProperties.Tags)}");
         }
 
         private static async void SendDeviceToCloudMessagesAsync()
@@ -139,7 +156,7 @@ namespace simulator
                 Thread.Sleep(100);
 
                 var time = DateTime.Now - start;
-                if(time.Seconds >= duration)
+                if (time.Seconds >= duration)
                 {
                     Success($"Sent {i} messages, druation {time.Seconds} seconds");
                     run = false;
@@ -160,7 +177,7 @@ namespace simulator
                     await deviceClient.CompleteAsync(cmd);
                 }
 
-                Thread.Sleep(3000);
+                Thread.Sleep(100);
             }
         }
     }

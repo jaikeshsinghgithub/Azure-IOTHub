@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simulator-direct", "simulator\simulator-direct.csproj", "{92F39610-713B-4FC1-BEBA-9ABCCD20F53E}"
 EndProject
@@ -49,6 +49,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "field-gateway-c2d-job", "field-gateway-c2d-job\field-gateway-c2d-job.csproj", "{D26F0FF3-54A7-494B-B213-B10F024709E6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simulator-togateway", "gw-simulator\simulator-togateway.csproj", "{D7E90650-1684-4243-9EEF-3EE077EF6C8B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{B9951A6F-DF8E-4D7A-BC8D-72E43B77F125}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simulator-direct-dm", "tools\DeviceStatusMonitor\simulator-direct-dm.csproj", "{11F59510-794C-4C4E-8688-9F89D11AC3ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -226,6 +230,22 @@ Global
 		{D7E90650-1684-4243-9EEF-3EE077EF6C8B}.Release|x64.Build.0 = Release|Any CPU
 		{D7E90650-1684-4243-9EEF-3EE077EF6C8B}.Release|x86.ActiveCfg = Release|Any CPU
 		{D7E90650-1684-4243-9EEF-3EE077EF6C8B}.Release|x86.Build.0 = Release|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Debug|ARM.Build.0 = Debug|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Debug|x64.Build.0 = Debug|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Debug|x86.Build.0 = Debug|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Release|ARM.ActiveCfg = Release|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Release|ARM.Build.0 = Release|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Release|x64.ActiveCfg = Release|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Release|x64.Build.0 = Release|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Release|x86.ActiveCfg = Release|Any CPU
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -243,5 +263,9 @@ Global
 		{116E22F5-21C7-43D8-B9D2-1927832BFBB0} = {14C8A4F9-DFA1-4930-8D31-18A86A749058}
 		{D26F0FF3-54A7-494B-B213-B10F024709E6} = {E994180C-075C-41B8-9D16-A619346E8030}
 		{D7E90650-1684-4243-9EEF-3EE077EF6C8B} = {3ABFBB38-0C4D-4204-B6DF-956F4FF7228C}
+		{11F59510-794C-4C4E-8688-9F89D11AC3ED} = {3ABFBB38-0C4D-4204-B6DF-956F4FF7228C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8
 	EndGlobalSection
 EndGlobal

@@ -9,6 +9,8 @@ using System.Security.Cryptography;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using System.Configuration;
+
 namespace EventProcessorJob
 {
     /// <summary>
@@ -36,7 +38,8 @@ namespace EventProcessorJob
             blobClient = storageAccount.CreateCloudBlobClient();
             blobContainer = blobClient.GetContainerReference("d2ctutorial");
             blobContainer.CreateIfNotExists();
-            queueClient = QueueClient.CreateFromConnectionString(ServiceBusConnectionString, "sksdemo");
+            queueClient = QueueClient.CreateFromConnectionString(ServiceBusConnectionString, 
+                ConfigurationManager.AppSettings["serviceBusQueueName"]);
         }
 
         Task IEventProcessor.CloseAsync(PartitionContext context, CloseReason reason)

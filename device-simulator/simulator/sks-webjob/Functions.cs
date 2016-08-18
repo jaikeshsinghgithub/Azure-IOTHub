@@ -11,15 +11,20 @@ using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Xml;
 using Newtonsoft.Json;
+using System.Configuration;
 
 namespace sks_webjob
 {
     public class Functions
     {
-        private static string nhConnectionString = "Endpoint=sb://skshub.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=+toF6XlnEcBSPlDTN0WPW2XBNmpIEQnZbQUTfO2y/aY=";
-        private static string hubName = "sks-notification";
-        private static string sbQueueAdminConnectinString = "Endpoint=sb://michiazurecontw.servicebus.windows.net/;SharedAccessKeyName=admin;SharedAccessKey=nY6VrI4Qb8/dNCi6GNpVa1ncLa8ZjcqYakucyaqaMyk=";
-        private static string sbQueueName = "sksdemo";
+        //private static string nhConnectionString = "Endpoint=sb://skshub.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=+toF6XlnEcBSPlDTN0WPW2XBNmpIEQnZbQUTfO2y/aY=";
+        //private static string hubName = "sks-notification";
+        //private static string sbQueueAdminConnectinString = "Endpoint=sb://michiazurecontw.servicebus.windows.net/;SharedAccessKeyName=admin;SharedAccessKey=nY6VrI4Qb8/dNCi6GNpVa1ncLa8ZjcqYakucyaqaMyk=";
+        //private static string sbQueueName = "sksdemo";
+        private static string nhConnectionString = ConfigurationManager.AppSettings["nhConnectionString"];//"Endpoint=sb://skshub.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=+toF6XlnEcBSPlDTN0WPW2XBNmpIEQnZbQUTfO2y/aY=";
+        private static string hubName = ConfigurationManager.AppSettings["nhHubName"];//"sks-notification";
+        private static string sbQueueAdminConnectinString = ConfigurationManager.AppSettings["serviceBusConnectionString"];//"Endpoint=sb://michiazurecontw.servicebus.windows.net/;SharedAccessKeyName=admin;SharedAccessKey=nY6VrI4Qb8/dNCi6GNpVa1ncLa8ZjcqYakucyaqaMyk=";
+        private static string sbQueueName = ConfigurationManager.AppSettings["serviceBusQueueName"];//"sksdemo";
         // This function will get triggered/executed when a new message is written 
         // on an Azure Queue called queue.
         public static void ProcessQueueMessage([QueueTrigger("queue")] string message, TextWriter log)

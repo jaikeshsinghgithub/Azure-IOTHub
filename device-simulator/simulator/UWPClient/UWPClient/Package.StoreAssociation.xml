@@ -358,16 +358,18 @@
     <Language Code="zu-za" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>42362KalsChi.SKS-Demo-01</MainPackageIdentityName>
+    <MainPackageIdentityName>42362KalsChi.Wistron-IOT-Demo</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>SKS-Demo-01</ReservedName>
+      <ReservedName>Wistron-IOT-Demo</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
     <MainPackageIdentityName>42362KalsChi.108</MainPackageIdentityName>
     <MainPackageIdentityName>42362KalsChi.DX-TED-Michael-DEMO01</MainPackageIdentityName>
     <MainPackageIdentityName>42362KalsChi.QQ-UWPWP8-Test-01</MainPackageIdentityName>
+    <MainPackageIdentityName>42362KalsChi.SKS-Demo-01</MainPackageIdentityName>
+    <MainPackageIdentityName>42362KalsChi.TrendMicroTechdaysDEMO</MainPackageIdentityName>
     <MainPackageIdentityName>42362KalsChi.TWHospitalStatus</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH4QCK0" />
+  <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9NBLGGH515N8" />
 </StoreAssociation>

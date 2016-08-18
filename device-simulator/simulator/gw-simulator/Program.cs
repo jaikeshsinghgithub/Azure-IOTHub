@@ -68,8 +68,8 @@ namespace gw_simulator
 
             //SendTelemetry2();
             //ReceiveCommandAsync();
-            Thread send = new Thread(SendTelemetry_SKS);// SendTelemetry_SKS);
-            //Thread recv = new Thread(ReceiveCommand2);
+            Thread send = new Thread(SendTelemetry2);
+            Thread recv = new Thread(ReceiveCommand2);
             send.Start();
             //recv.Start();
             Wait("Press [ENTER] to exit...");

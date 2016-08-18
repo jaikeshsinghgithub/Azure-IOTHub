@@ -182,6 +182,7 @@
     <None Include="Properties\PublishProfiles\webfieldgateway - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\webfieldgateway.pubxml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <None Include="Properties\PublishProfiles\WISTRON-DEMO-APP - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

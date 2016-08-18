@@ -10,10 +10,10 @@ namespace sks_evh
     {
         static void Main(string[] args)
         {
-            string iotHubConnectionString = "HostName=sks-demo-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=OH/eB28iElMTVY8I2MLucAReOQd+kDXgr12XY3srMqs=";
+            string iotHubConnectionString = "HostName={iothub-name}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey={shared-key}";
             string iotHubD2cEndpoint = "messages/events";
-            StoreEventProcessor.StorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=michistorageea;AccountKey=xu0WWCzn+tL/lDM70rUV6pCX2ILovPa8imlj8HLKqr9iNgJcfBrCJabH1RdbKKeM9u5ht30KOGNoIYuNWc1hVg==";
-            StoreEventProcessor.ServiceBusConnectionString = "Endpoint=sb://michiazurecontw.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=MFHzNRwJAYkqtus+6u/MGsM74nE44Z2VWmIm9S0EPbg=";
+            StoreEventProcessor.StorageConnectionString = "DefaultEndpointsProtocol=https;AccountName={storage-name};AccountKey={storage-key}";
+            StoreEventProcessor.ServiceBusConnectionString = "Endpoint=sb://{servicebus-name}.servicebus.windows.net/;SharedAccessKeyName={servicebus-key}";
 
             string eventProcessorHostName = Guid.NewGuid().ToString();
             EventProcessorHost eventProcessorHost = new EventProcessorHost(eventProcessorHostName, iotHubD2cEndpoint, EventHubConsumerGroup.DefaultGroupName, iotHubConnectionString, StoreEventProcessor.StorageConnectionString, "messages-events");

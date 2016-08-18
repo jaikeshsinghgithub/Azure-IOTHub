@@ -10,6 +10,7 @@ namespace simulator
     public class TelemetryData
     {
         public int Temperature { get; set; }
+        
         static Random random = new System.Random();
         public string SeqNo { get; set; }
         public DateTime Timestamp { get; set; }
@@ -19,6 +20,10 @@ namespace simulator
         public DCAC DCorAC { get; set; }
         public string ADSLor3G { get; set; }
         public string Message { get; set; }
+        public int Pressure { get; set; }
+
+        public int FanSpeed { get; set; }
+        public int MessageType { get; set; }
         public static TelemetryData Random(string deviceID,string seqNo, string msg, int min, int max)
         {
             TelemetryTypes type = (TelemetryTypes)random.Next(0, 2);
@@ -37,7 +42,9 @@ namespace simulator
                 UID = "UID-" + Guid.NewGuid().ToString(),
                 DCorAC = (DCAC)random.Next(0, 1),
                 ADSLor3G = random.Next(100) >= 50 ? "ADSL" : "3G",
-                Message = msg
+                Pressure = random.Next(1000),
+                Message = msg,
+                FanSpeed = random.Next(3000)
             };
             return ret;
         }

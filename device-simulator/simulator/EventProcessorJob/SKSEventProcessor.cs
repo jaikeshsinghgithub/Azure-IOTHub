@@ -66,16 +66,16 @@ namespace EventProcessorJob
                 byte[] data = eventData.GetBytes();
 
                 var text = Encoding.UTF8.GetString(data);
+                //TODO: wirte your own logic below
                 if (text.IndexOf("\"Type\":1") >= 0)
                 {
                     var queueMessage = new BrokeredMessage(new MemoryStream(data));
                     queueMessage.Properties["message-source"] = "evh";
                     queueMessage.ContentType = text.GetType().FullName;
                     await queueClient.SendAsync(queueMessage);
-
                     WriteHighlightedMessage(string.Format("*** Received interactive message: {0}", text));
                 }
-
+                //==========================
                 if (toAppend.Length + data.Length > MAX_BLOCK_SIZE || stopwatch.Elapsed > MAX_CHECKPOINT_TIME)
                 {
                     await AppendAndCheckpoint(context);

@@ -110,6 +110,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\byddemojob - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\skswebjobhost - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\skswebjobhost - Web Deploy.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
@@ -125,6 +126,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.9\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.9\tools\webjobs.targets')" />

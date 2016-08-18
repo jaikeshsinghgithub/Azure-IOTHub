@@ -62,8 +62,9 @@ namespace UWPClient
         {
             var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
 
-            var hub = new NotificationHub("sks-notification", "Endpoint=sb://skshub.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=hqP02VpOdrJhbvVB3vi/avkG1nTZhkS4pYxgQQkviRk=");
-            var result = await hub.RegisterNativeAsync(channel.Uri, new string[] { "IT","IT Manager", "Regional IT Direcotor" });
+            //var hub = new NotificationHub("sks-notification", "Endpoint=sb://skshub.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=hqP02VpOdrJhbvVB3vi/avkG1nTZhkS4pYxgQQkviRk=");
+            var hub = new NotificationHub("wistron-demo", "Endpoint=sb://wistron-demo.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=TCdvkg7GKaIATkBIGXeca9BnOfkhaDvEHUDiACCR4Sk=");
+            var result = await hub.RegisterNativeAsync(channel.Uri);//, new string[] { "IT","IT Manager", "Regional IT Direcotor" });
 
             // Displays the registration ID so you know it was successful
             if (result.RegistrationId != null)

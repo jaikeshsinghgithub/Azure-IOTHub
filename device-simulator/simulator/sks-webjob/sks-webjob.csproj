@@ -119,6 +119,8 @@
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\azurebot - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\skswebjobhost - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\WISTRON-DEMO-APP - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\WISTRON-DEMO-APP - Web Deploy.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
     <None Include="sks-webjob_TemporaryKey.pfx" />
   </ItemGroup>

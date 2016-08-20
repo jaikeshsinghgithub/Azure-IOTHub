@@ -136,7 +136,7 @@ namespace simulator
                 await deviceClient.CloseAsync();
                 Console.WriteLine("{0} ==> Sending message: {1}", DateTime.Now, telemetry);
 
-                Thread.Sleep(100);
+                Thread.Sleep(1000 );
 
                 var time = DateTime.Now - start;
                 if(time.Seconds >= duration)

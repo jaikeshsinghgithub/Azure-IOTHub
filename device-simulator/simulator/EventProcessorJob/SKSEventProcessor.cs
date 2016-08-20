@@ -10,6 +10,8 @@ using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Configuration;
+using System.Data.SqlClient;
+using Newtonsoft.Json;
 
 namespace EventProcessorJob
 {
@@ -72,6 +74,15 @@ namespace EventProcessorJob
                 //TODO: wirte your own logic below
                 if (text.IndexOf("\"Type\":1") >= 0)
                 {
+                    //using (var conn = new SqlConnection(""))
+                    //{
+                    //    dynamic obj = JsonConvert.DeserializeObject(text);
+                    //    using(var cmd = conn.CreateCommand())
+                    //    {
+                    //        cmd.CommandText = $"insert into demo value({obj.Temperature},{obj.Pressure},{obj.DeiviceI})";
+                    //        cmd.ExecuteNonQuery();
+                    //    }
+                    //}
                     var queueMessage = new BrokeredMessage(new MemoryStream(data));
                     queueMessage.Properties["message-source"] = "evh";
                     queueMessage.ContentType = text.GetType().FullName;

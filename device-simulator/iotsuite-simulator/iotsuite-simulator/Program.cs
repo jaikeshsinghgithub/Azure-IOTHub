@@ -134,6 +134,7 @@ namespace simulator
                 if (i == 1)
                 {
                     var initData = IOTSuiteClientHelper.GetInitiateDeviceData(deviceId);
+                    Log($"Sending initial data => {initData}");
                     await deviceClient.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(Encoding.UTF8.GetBytes(initData)));
                     Thread.Sleep(1000);
 

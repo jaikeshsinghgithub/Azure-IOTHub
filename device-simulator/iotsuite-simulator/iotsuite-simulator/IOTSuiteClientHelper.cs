@@ -58,6 +58,16 @@ namespace simulator
         public CommandParameter[] Parameters;
     }
     [DataContract]
+    public class TelemetryMember
+    {
+        [DataMember]
+        public string Name;
+        [DataMember]
+        public string Type;
+        [DataMember]
+        public string DisplayName;
+    }
+    [DataContract]
     public class Thermostat
     {
         [DataMember]
@@ -70,6 +80,9 @@ namespace simulator
         public string Version;
         [DataMember]
         public string ObjectType;
+
+        [DataMember]
+        public TelemetryMember[] Telemetry;
     }
 
     public class IOTSuiteTelemetryData
@@ -133,7 +146,32 @@ namespace simulator
             demoCommand.Parameters = new CommandParameter[] { demoParam };
 
             thermostat.Commands = new Command[] { TriggerAlarm, demoCommand };
-
+            thermostat.Telemetry = new TelemetryMember[] {
+                new TelemetryMember {
+                    Name = "_0101",
+                    Type = "int",
+                    DisplayName = "工作狀態"
+                },
+             new TelemetryMember {
+                    Name = "_0102",
+                    Type = "int",
+                    DisplayName = "工作模式"
+                },
+            new TelemetryMember {
+                    Name = "_0103",
+                    Type = "int",
+                    DisplayName = "電壓"
+                },
+            new TelemetryMember {
+                    Name = "_0104",
+                    Type = "int",
+                    DisplayName = "電流"
+                },
+            new TelemetryMember {
+                    Name = "_0105",
+                    Type = "int",
+                    DisplayName = "功率"
+                }};
             var ret = JsonConvert.SerializeObject(thermostat);
 
             return ret;

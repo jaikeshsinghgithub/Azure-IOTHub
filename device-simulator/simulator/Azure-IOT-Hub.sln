@@ -58,6 +58,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "c2d-alarm", "c2d-alarm\c2d-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "c2d", "c2d", "{A6ACE407-4C89-4437-B39E-729051402C32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iotsuite-simulator", "..\iotsuite-simulator\iotsuite-simulator\iotsuite-simulator.csproj", "{7B3A6605-1969-4EA1-8F7F-5F41D1947800}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -266,6 +268,22 @@ Global
 		{A9936772-53CA-4AFD-9913-2DB736E070E8}.Release|x64.Build.0 = Release|Any CPU
 		{A9936772-53CA-4AFD-9913-2DB736E070E8}.Release|x86.ActiveCfg = Release|Any CPU
 		{A9936772-53CA-4AFD-9913-2DB736E070E8}.Release|x86.Build.0 = Release|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Debug|ARM.Build.0 = Debug|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Debug|x64.Build.0 = Debug|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Debug|x86.Build.0 = Debug|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Release|ARM.Build.0 = Release|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Release|x64.ActiveCfg = Release|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Release|x64.Build.0 = Release|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Release|x86.ActiveCfg = Release|Any CPU
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -285,6 +303,7 @@ Global
 		{D7E90650-1684-4243-9EEF-3EE077EF6C8B} = {3ABFBB38-0C4D-4204-B6DF-956F4FF7228C}
 		{11F59510-794C-4C4E-8688-9F89D11AC3ED} = {3ABFBB38-0C4D-4204-B6DF-956F4FF7228C}
 		{A9936772-53CA-4AFD-9913-2DB736E070E8} = {A6ACE407-4C89-4437-B39E-729051402C32}
+		{7B3A6605-1969-4EA1-8F7F-5F41D1947800} = {3ABFBB38-0C4D-4204-B6DF-956F4FF7228C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8

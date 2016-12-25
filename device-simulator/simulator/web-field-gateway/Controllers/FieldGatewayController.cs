@@ -103,6 +103,8 @@ namespace web_field_gateway.Controllers
                         GetDeviceKey(telemetry.DeviceId)
                     ));
 #else
+
+
                 var key = await GetDeviceKey(telemetry.DeviceId);
                 DeviceClient dc = DeviceClient.CreateFromConnectionString(
                     $"HostName={iotHubUri};DeviceId={telemetry.DeviceId};SharedAccessKey={key}",

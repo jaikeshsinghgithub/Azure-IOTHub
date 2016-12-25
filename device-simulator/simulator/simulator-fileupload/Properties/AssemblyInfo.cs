@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("iotsuite-simulator")]
+[assembly: AssemblyTitle("simulator-fileupload")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("iotsuite-simulator")]
+[assembly: AssemblyProduct("simulator-fileupload")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b7548545-a725-4833-bc8b-37087c967c73")]
+[assembly: Guid("f8335bf3-e27e-429d-ba58-4e8cae6e1d54")]
 
 // Version information for an assembly consists of the following four values:
 //

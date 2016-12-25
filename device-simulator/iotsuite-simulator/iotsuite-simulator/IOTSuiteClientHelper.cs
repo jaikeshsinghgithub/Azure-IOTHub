@@ -173,10 +173,16 @@ namespace simulator
             CommandParameter demoParam = new CommandParameter();
             demoParam.Name = "CommandType";
             demoParam.Type = "String";
+
             CommandParameter demoParam2 = new CommandParameter();
             demoParam2.Name = "CommandType2";
             demoParam2.Type = "String";
             demoCommand.Parameters = new CommandParameter[] { demoParam, demoParam2 };
+
+            CommandParameter demoParam3 = new CommandParameter();
+            demoParam3.Name = "CommandType3";
+            demoParam3.Type = "String";
+            demoCommand.Parameters = new CommandParameter[] { demoParam, demoParam2, demoParam3 };
 
             thermostat.Commands = new Command[] { TriggerAlarm, demoCommand };
             thermostat.Telemetry = new TelemetryMember[] {

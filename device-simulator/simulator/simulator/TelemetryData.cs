@@ -9,6 +9,7 @@ namespace simulator
     //流水號,timestamp,類別,主機號,UID,DC/AC,ADSL/3G,Msg
     public class TelemetryData
     {
+        public string Log { get; set; }
         public int Temperature { get; set; }
         
         static Random random = new System.Random();
@@ -36,7 +37,7 @@ namespace simulator
             {
                 Temperature = rnd,
                 SeqNo = seqNo,
-                Timestamp = DateTime.UtcNow,
+                Timestamp = DateTime.Now,
                 Type = type,
                 DeviceId = deviceID,
                 UID = "UID-" + Guid.NewGuid().ToString(),

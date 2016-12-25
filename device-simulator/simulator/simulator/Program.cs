@@ -59,7 +59,7 @@ namespace simulator
             registryManager = RegistryManager.CreateFromConnectionString(connectionString);
             #endregion
             AddDeviceAsync().Wait();
-            
+                    
             SendDeviceToCloudMessagesAsync();
             ReceiveCommandAsync();
             Wait("Press [ENTER] to exit...");
@@ -132,7 +132,10 @@ namespace simulator
                 i++;
                 string telemetry = GenerateMessage(i, $"message:{i}");
                 DeviceClient deviceClient = CreateDeviceClient(deviceId, deviceKey);
-                await deviceClient.SendEventAsync(new Microsoft.Azure.Devices.Client.Message(Encoding.UTF8.GetBytes(telemetry)));
+                var msg = new Microsoft.Azure.Devices.Client.Message(Encoding.UTF8.GetBytes(telemetry));
+                msg.Properties.Add("severity", "0");
+                await deviceClient.SendEventAsync(msg);
+                
                 await deviceClient.CloseAsync();
                 Console.WriteLine("{0} ==> Sending message: {1}", DateTime.Now, telemetry);
 
@@ -159,7 +162,6 @@ namespace simulator
                     Success(Encoding.UTF8.GetString(cmd.GetBytes()));
                     await deviceClient.CompleteAsync(cmd);
                 }
-
                 Thread.Sleep(3000);
             }
         }

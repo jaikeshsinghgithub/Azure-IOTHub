@@ -53,7 +53,7 @@ namespace EventProcessorJob
         Task IEventProcessor.OpenAsync(PartitionContext context)
         {
             Console.WriteLine("StoreEventProcessor initialized.  Partition: '{0}', Offset: '{1}'", context.Lease.PartitionId, context.Lease.Offset);
-
+            
             if (!long.TryParse(context.Lease.Offset, out currentBlockInitOffset))
             {
                 currentBlockInitOffset = 0;
@@ -69,7 +69,7 @@ namespace EventProcessorJob
             foreach (EventData eventData in messages)
             {
                 byte[] data = eventData.GetBytes();
-
+                
                 var text = Encoding.UTF8.GetString(data);
                 //TODO: wirte your own logic below
                 if (text.IndexOf("\"Type\":1") >= 0)

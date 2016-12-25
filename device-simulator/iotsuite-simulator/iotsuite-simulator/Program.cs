@@ -45,7 +45,7 @@ namespace simulator
             #region added
             if (args.Length < 3)
             {
-                Error("Usage: sumulator {deviceid} {max} {min}");
+                Error("Usage: sumulator {deviceid} {min} {max}");
                 Wait();
                 return;
             }

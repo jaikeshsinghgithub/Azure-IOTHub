@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace simulator
+namespace MQTTIoTHubClient
 {
     //流水號,timestamp,類別,主機號,UID,DC/AC,ADSL/3G,Msg
     public class TelemetryData
     {
+        public string Log { get; set; }
         public int Temperature { get; set; }
-
+        
         static Random random = new System.Random();
         public string SeqNo { get; set; }
         public DateTime Timestamp { get; set; }
@@ -24,7 +25,7 @@ namespace simulator
 
         public int FanSpeed { get; set; }
         public int MessageType { get; set; }
-        public static TelemetryData Random(string deviceID, string seqNo, string msg, int min, int max)
+        public static TelemetryData Random(string deviceID,string seqNo, string msg, int min, int max)
         {
             TelemetryTypes type = (TelemetryTypes)random.Next(0, 2);
             var rnd = random.Next(0, 101);
@@ -36,7 +37,7 @@ namespace simulator
             {
                 Temperature = rnd,
                 SeqNo = seqNo,
-                Timestamp = DateTime.UtcNow,
+                Timestamp = DateTime.Now,
                 Type = type,
                 DeviceId = deviceID,
                 UID = "UID-" + Guid.NewGuid().ToString(),
@@ -51,10 +52,10 @@ namespace simulator
     }
     public enum TelemetryTypes
     {
-        A = 0, B = 1, C = 2
+        A= 0,B= 1,C = 2
     }
     public enum DCAC
     {
-        DC = 0, AC = 1
+        DC = 0,AC = 1
     }
 }
